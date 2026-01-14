@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kaito Cafe｜公式サイト</title>
+  <meta name="description" content="Kaito Cafeは、街の夜をちょっとだけ良くする飲食ブランドです。店舗情報、メニュー、採用、会社情報はこちら。" />
+  <meta name="theme-color" content="#0b0f1a" />
+  <style>
+    :root{
+      --bg:#0b0f1a;
+      --panel:#121a2b;
+      --text:#e9ecf5;
+      --muted:#a8b0c6;
+      --accent:#ec4899;
+      --accent2:#a855f7;
+      --good:#30d158;
+      --shadow: 0 24px 80px rgba(0,0,0,.35);
+      --radius: 24px;
+      --max: 1120px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:radial-gradient(1200px 700px at 10% 0%, rgba(124,92,255,.25), transparent 55%),
+                                    radial-gradient(900px 600px at 80% 10%, rgba(0,229,255,.18), transparent 55%),
+                                    var(--bg); color:var(--text);
+              font-family: ui-sans-serif, system-ui, -apple-system, "Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic", sans-serif;}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 18px}
+    .btn{display:inline-flex;align-items:center;gap:.6em;padding:14px 22px;border-radius:14px;font-size:15px;
+         border:1px solid var(--line); background:rgba(255,255,255,.04); backdrop-filter: blur(10px);
+         transition:.2s ease; font-weight:700}
+    .btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22)}
+    .btn.primary{background:linear-gradient(135deg, rgba(124,92,255,.95), rgba(0,229,255,.55)); border-color:transparent}
+    .badge{display:inline-flex;align-items:center;gap:.5em;padding:7px 10px;border-radius:999px;
+           border:1px solid var(--line); background:rgba(255,255,255,.04); color:var(--muted); font-size:12px}
+    header{position:sticky;top:0;z-index:50;background:rgba(11,15,26,.7);backdrop-filter: blur(14px);
+           border-bottom:1px solid var(--line)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:14px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.06em}
+    .logo{width:34px;height:34px;border-radius:12px;
+          background: conic-gradient(from 220deg, var(--accent), var(--accent2), var(--accent)); box-shadow: 0 10px 30px rgba(124,92,255,.25)}
+    .menu{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .menu a{color:var(--muted);font-weight:700;font-size:14px;padding:8px 10px;border-radius:999px}
+    .menu a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+    .nav-cta{display:flex;gap:10px;align-items:center}
+    .hamb{display:none}
+    .hero{padding:64px 0 28px}
+    .hero-grid{display:grid;grid-template-columns: 1.12fr .88fr;gap:18px;align-items:stretch}
+    .h1{font-size:40px;line-height:1.1;margin:10px 0 12px;letter-spacing:-.02em}
+    .lead{color:var(--muted);font-size:16px;line-height:1.8;margin:0 0 18px}
+    .card{
+      border:1px solid var(--line); background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius: var(--radius); box-shadow: var(--shadow);
+    }
+    .hero-left{padding:22px}
+    .hero-right{overflow:hidden;position:relative}
+    .hero-visual{
+  height:100%;
+  min-height:260px;
+  background-image:
+    linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.65)),
+    url("images/hero.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius);
+  border:1px solid rgba(255,255,255,.14);
+}
+    .hero-visual::after{
+      content:""; position:absolute; inset:-30px;
+      background-image: linear-gradient( to bottom, rgba(0,0,0,.15), rgba(0,0,0,.65));
+      pointer-events:none;
+    }
+    .statbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .stat{padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(0,0,0,.18);min-width:160px}
+    .stat b{display:block;font-size:18px}
+    .stat span{color:var(--muted);font-size:12px}
+    section{padding:42px 0}
+    .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:14px}
+    .sec-head h2{margin:0;font-size:22px}
+    .sec-head p{margin:0;color:var(--muted);line-height:1.6}
+    .grid3{display:grid;grid-template-columns: repeat(3, 1fr); gap:14px}
+    .grid2{display:grid;grid-template-columns: repeat(2, 1fr); gap:14px}
+    .p16{padding:16px}
+    .kicker{color:var(--muted);font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+    .h3{margin:8px 0 6px;font-size:16px}
+    .txt{margin:0;color:var(--muted);line-height:1.8;font-size:14px}
+    .pill{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;margin-top:10px}
+    .dot{width:10px;height:10px;border-radius:50%;background:var(--good);box-shadow: 0 0 0 6px rgba(48,209,88,.15)}
+    .table{width:100%;border-collapse:collapse}
+    .table td,.table th{border-top:1px solid var(--line);padding:12px 10px;text-align:left;font-size:14px}
+    .table th{color:var(--muted);font-weight:800}
+    .footer{padding:24px 0 36px;border-top:1px solid var(--line);color:var(--muted)}
+    .footer-grid{display:grid;grid-template-columns: 1.2fr .8fr; gap:14px; align-items:start}
+    .small{font-size:12px;line-height:1.7;color:var(--muted)}
+    .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .chip{padding:8px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:12px}
+    .notice{border-left:3px solid rgba(0,229,255,.55);padding:12px 12px 12px 14px;background:rgba(0,229,255,.05);border-radius:12px;color:var(--muted)}
+    .form{display:grid;gap:10px}
+    input,textarea{
+      width:100%; padding:12px 12px; border-radius:12px;
+      border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--text);
+      outline:none;
+    }
+    textarea{min-height:120px;resize:vertical}
+    input:focus,textarea:focus{border-color: rgba(124,92,255,.7)}
+    .right{display:flex;justify-content:flex-end;gap:10px}
+    .hide{display:none}
+
+    @media (max-width: 920px){
+      .hero-grid{grid-template-columns: 1fr}
+      .grid3{grid-template-columns: 1fr}
+      .grid2{grid-template-columns: 1fr}
+      .h1{font-size:34px}
+      .menu{display:none}
+      .hamb{display:inline-flex}
+      .menu.open{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:12px 0}
+      .footer-grid{grid-template-columns: 1fr}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap">
+    <div class="nav">
+      <a class="brand" href="#top" aria-label="Kaito Cafe トップへ">
+        <span class="logo" aria-hidden="true"></span>
+        <span id="siteName">Kaito Cafe</span>
+      </a>
+
+      <nav class="menu" id="menu">
+        <a href="#brand">ブランド</a>
+        <a href="#stores">店舗情報</a>
+        <a href="#menu-sec">メニュー</a>
+        <a href="#news">お知らせ</a>
+        <a href="#recruit">採用</a>
+        <a href="#company">会社情報</a>
+        <a href="#contact">お問い合わせ</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn" href="#stores">店舗を探す</a>
+        <a class="btn primary" href="#recruit">採用を見る</a>
+        <button class="btn hamb" id="hamb" aria-controls="menu" aria-expanded="false">メニュー</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="card hero-left">
+          <span class="badge">🍽️ 街の夜を、ちょっとだけ良くする</span>
+          <h1 class="h1" id="heroTitle">コーヒー一杯で。<br>今日をリセット。</h1>
+          <p class="lead" id="heroLead">
+            Kaito Cafeは、20〜30代が「また来たい」と思える空間を目指しています。
+          </p>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn primary" href="#stores">店舗一覧を見る</a>
+            <a class="btn" href="#brand">ブランドを見る</a>
+          </div>
+
+          <div class="statbar" aria-label="ブランドの指標">
+            <div class="stat">
+              <b>3</b><span>店舗（例）</span>
+            </div>
+            <div class="stat">
+              <b>〜23:30</b><span>ラストオーダー（例）</span>
+            </div>
+            <div class="stat">
+              <b>予約OK</b><span>Web / 電話（例）</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="hero-visual card" role="img" aria-label="店内イメージ（仮）"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="brand">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="kicker">Brand</div>
+          <h2>ブランドの考え方</h2>
+        </div>
+        <p>“映える”より先に、“居心地”を作る。<br>結果として、写真もちゃんと良くなる。</p>
+      </div>
+
+      <div class="grid3">
+        <div class="card p16">
+          <div class="kicker">Concept</div>
+          <div class="h3">日常に、ちょい非日常</div>
+          <p class="txt">友達との集まりも、デートも、ひとり飯も。どれでも成立する空気感を設計しています。</p>
+          <div class="pill"><span class="dot"></span>落ち着く照明と音量（例）</div>
+        </div>
+        <div class="card p16">
+          <div class="kicker">Food</div>
+          <div class="h3">ちゃんと美味いを、当たり前に</div>
+          <p class="txt">素材・火入れ・提供温度。シンプルなことほど、丁寧にやります。</p>
+          <div class="pill"><span class="dot"></span>季節限定メニュー（例）</div>
+        </div>
+        <div class="card p16">
+          <div class="kicker">Service</div>
+          <div class="h3">距離感うまい接客</div>
+          <p class="txt">フレンドリー過ぎず、冷たくもない。“ちょうど良さ”をチームで作っています。</p>
+          <div class="pill"><span class="dot"></span>キャッシュレス対応（例）</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stores">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="kicker">Stores</div>
+          <h2>店舗情報</h2>
+        </div>
+        <p>地図・営業時間・予約導線を最短で。</p>
+      </div>
+
+      <div class="grid3">
+        <div class="card p16">
+          <div class="h3">Kaito Cafe 梅田（例）</div>
+          <p class="txt">〒000-0000 大阪府大阪市◯◯◯（例）<br>11:30〜23:30 / 不定休</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+            <a class="btn" href="#" aria-label="Googleマップ（仮）">地図</a>
+            <a class="btn primary" href="#" aria-label="予約（仮）">予約</a>
+          </div>
+        </div>
+        <div class="card p16">
+          <div class="h3">Kaito Cafe 京都（例）</div>
+          <p class="txt">〒000-0000 京都府京都市◯◯◯（例）<br>12:00〜23:00 / 水休</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+            <a class="btn" href="#">地図</a>
+            <a class="btn primary" href="#">予約</a>
+          </div>
+        </div>
+        <div class="card p16">
+          <div class="h3">Kaito Cafe 神戸（例）</div>
+          <p class="txt">〒000-0000 兵庫県神戸市◯◯◯（例）<br>17:00〜24:00 / 月休</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+            <a class="btn" href="#">地図</a>
+            <a class="btn primary" href="#">予約</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px" class="notice">
+        ※ここは“コーポレート”なので、店舗詳細は各店舗ページに飛ばす設計が王道です（今は1枚にまとめてます）。
+      </div>
+    </div>
+  </section>
+
+  <section id="menu-sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="kicker">Menu</div>
+          <h2>代表メニュー</h2>
+        </div>
+        <p>写真が揃うと一気に強くなる場所。</p>
+      </div>
+
+      <div class="grid2">
+        <div class="card p16">
+          <div class="h3">名物：炭火グリルプレート（例）</div>
+          <p class="txt">ジューシー×香ばしさで、迷ったらコレ枠。<br>¥1,480〜（例）</p>
+        </div>
+        <div class="card p16">
+          <div class="h3">人気：季節のパスタ（例）</div>
+          <p class="txt">季節で具材が変わる定番。<br>¥1,280〜（例）</p>
+        </div>
+        <div class="card p16">
+          <div class="h3">定番：クラフトレモンサワー（例）</div>
+          <p class="txt">甘すぎない、ちゃんと酸っぱい。<br>¥680〜（例）</p>
+        </div>
+        <div class="card p16">
+          <div class="h3">デザート：バスクチーズ（例）</div>
+          <p class="txt">締めに強い。写真も強い。<br>¥580〜（例）</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="news">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="kicker">News</div>
+          <h2>お知らせ</h2>
+        </div>
+        <p>SNS連動にすると運用がラク。</p>
+      </div>
+
+      <div class="grid3">
+        <div class="card p16">
+          <div class="badge">2026.01.10</div>
+          <div class="h3">冬限定メニュー開始（例）</div>
+          <p class="txt">季節の食材を使った限定メニューを提供します。</p>
+        </div>
+        <div class="card p16">
+          <div class="badge">2025.12.20</div>
+          <div class="h3">年末年始の営業について（例）</div>
+          <p class="txt">各店舗の営業時間は店舗ページをご確認ください。</p>
+        </div>
+        <div class="card p16">
+          <div class="badge">2025.12.01</div>
+          <div class="h3">採用情報を更新（例）</div>
+          <p class="txt">ホール/キッチン、社員・アルバイト募集しています。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="recruit">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="kicker">Recruit</div>
+          <h2>採用情報</h2>
+        </div>
+        <p>20〜30代向けは“カルチャーが見える”と強い。</p>
+      </div>
+
+      <div class="grid2">
+        <div class="card p16">
+          <div class="h3">一緒に“いい夜”を作る</div>
+          <p class="txt">
+            接客が好き、料理が好き、空気づくりが好き。理由は何でもOK。<br>
+            大事なのは、チームで気持ちよく働けることやと思ってます。
+          </p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+            <a class="btn primary" href="#contact">応募・問い合わせ</a>
+            <a class="btn" href="#">募集要項（仮）</a>
+          </div>
+        </div>
+
+        <div class="card p16">
+          <table class="table" aria-label="募集職種">
+            <thead>
+              <tr><th>職種</th><th>雇用</th><th>目安</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ホール</td><td>アルバイト</td><td>週2〜（例）</td></tr>
+              <tr><td>キッチン</td><td>アルバイト</td><td>未経験OK（例）</td></tr>
+              <tr><td>店長候補</td><td>正社員</td><td>月給◯万円〜（例）</td></tr>
+            </tbody>
+          </table>
+          <p class="small">※待遇・条件は実際の運用に合わせて必ず明記してください（法務・労務チェック推奨）。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="company">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="kicker">Company</div>
+          <h2>会社情報</h2>
+        </div>
+        <p>取材・出店・取引の窓口もここ。</p>
+      </div>
+
+      <div class="card p16">
+        <table class="table" aria-label="会社概要">
+          <tbody>
+            <tr><th>会社名</th><td>株式会社Kaito Cafe（例）</td></tr>
+            <tr><th>所在地</th><td>〒000-0000 大阪府◯◯◯（例）</td></tr>
+            <tr><th>代表者</th><td>代表取締役 ◯◯ ◯◯（例）</td></tr>
+            <tr><th>設立</th><td>20XX年（例）</td></tr>
+            <tr><th>事業内容</th><td>飲食店運営 / 商品開発 / 店舗プロデュース（例）</td></tr>
+            <tr><th>取引・取材</th><td>business@example.com（例）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="chips">
+        <span class="chip">#ブランド</span>
+        <span class="chip">#店舗開発</span>
+        <span class="chip">#採用</span>
+        <span class="chip">#取材窓口</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="kicker">Contact</div>
+          <h2>お問い合わせ</h2>
+        </div>
+        <p>フォームは“受け口”だけ用意して、送信は外部サービス連携がラク。</p>
+      </div>
+
+      <div class="grid2">
+        <div class="card p16">
+          <p class="txt">
+            店舗予約は「店舗情報」の予約ボタンからが最短です。<br>
+            取材・出店・取引のご相談は、内容が分かるように書いてもらえると助かります。
+          </p>
+          <div class="notice" style="margin-top:12px">
+            ※このデモは送信機能なし（見た目だけ）です。<br>
+            実運用は Googleフォーム / Formspree / 自前API などで実装します。
+          </div>
+        </div>
+
+        <div class="card p16">
+          <form class="form" onsubmit="return fakeSubmit(event)">
+            <input required name="name" placeholder="お名前（例：山田 太郎）" />
+            <input required type="email" name="email" placeholder="メールアドレス" />
+            <input name="topic" placeholder="件名（例：取材のご相談）" />
+            <textarea required name="message" placeholder="内容"></textarea>
+            <div class="right">
+              <button class="btn" type="reset">クリア</button>
+              <button class="btn primary" type="submit">送信（デモ）</button>
+            </div>
+            <p id="done" class="small hide">送信しました（デモ）。実運用ではここがメール送信/DB登録になります。</p>
+          </form>
+        </div>
+      </div>
+
+      <div style="margin-top:18px" class="small">
+        <a href="#privacy">プライバシーポリシー</a> ・ <a href="#top">ページ上部へ</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="kicker">Privacy</div>
+          <h2>プライバシーポリシー（簡易）</h2>
+        </div>
+        <p>公開前に、実際の運用に合わせて調整必須。</p>
+      </div>
+
+      <div class="card p16">
+        <p class="txt">
+          当社は、お問い合わせ等で取得する個人情報を、回答・連絡の目的で利用します。<br>
+          法令に基づく場合を除き、本人の同意なく第三者提供しません。<br><br>
+          【お問い合わせ】privacy@example.com（例）
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom:8px">
+          <span class="logo" aria-hidden="true"></span>
+          <span>Kaito Cafe</span>
+        </div>
+        <div class="small">
+          © <span id="y"></span> Kaito Cafe Inc. (example). All rights reserved.
+        </div>
+      </div>
+      <div class="small">
+        <div>公式SNS（例）：Instagram / TikTok / X</div>
+        <div style="margin-top:8px;color:var(--muted)">運用のコツ：NewsはSNS連携、店舗ページはGoogleビジネスプロフィールと整合させると強い。</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const hamb = document.getElementById('hamb');
+  const menu = document.getElementById('menu');
+  if(hamb){
+    hamb.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      hamb.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  function fakeSubmit(e){
+    e.preventDefault();
+    const done = document.getElementById('done');
+    done.classList.remove('hide');
+    return false;
+  }
+</script>
+<script>
+  const THEMES = {
+    cafe: {
+      name: "Kaito Cafe",
+      title: "コーヒー一杯で。<br>今日をリセット。",
+      lead: "Kaito Cafeは、20〜30代が「また来たい」と思える空間を目指しています。",
+      accent: "#6f4e37",
+      accent2: "#d4a373"
+    },
+    bar: {
+      name: "Kaito Bar",
+      title: "一杯で変わる。<br>夜のテンション。",
+      lead: "静かに飲める、でも退屈じゃない。距離感うまい夜を作ります。",
+      accent: "#f59e0b",
+      accent2: "#ef4444"
+    },
+    salon: {
+      name: "Kaito Salon",
+      title: "髪を切るだけじゃない。<br>気分まで整える。",
+      lead: "初めてでも入りやすい。清潔感とリラックスを両立します。",
+      accent: "#ec4899",
+      accent2: "#a855f7"
+    }
+  };
+
+  function applyTheme(key){
+    const t = THEMES[key];
+    document.getElementById("siteName").innerHTML = t.name;
+    document.getElementById("heroTitle").innerHTML = t.title;
+    document.getElementById("heroLead").innerHTML = t.lead;
+
+    const root = document.documentElement;
+    root.style.setProperty("--accent", t.accent);
+    root.style.setProperty("--accent2", t.accent2);
+  }
+
+  // 画面右下に切り替えUIを出す（学習用）
+  const panel = document.createElement("div");
+  panel.style.cssText = `
+    position: fixed; right: 14px; bottom: 14px; z-index: 9999;
+    display:flex; gap:8px; flex-wrap:wrap;
+    padding:10px; border-radius:14px;
+    border:1px solid rgba(255,255,255,.16);
+    background: rgba(0,0,0,.35); backdrop-filter: blur(10px);
+  `;
+  ["cafe","bar","salon"].forEach(k=>{
+    const b = document.createElement("button");
+    b.textContent = k.toUpperCase();
+    b.className = "btn";
+    b.onclick = ()=>applyTheme(k);
+    panel.appendChild(b);
+  });
+  document.body.appendChild(panel);
+  const SHOW_SWITCHER = false; // trueにしたら表示
+
+if (!SHOW_SWITCHER) {
+  panel.style.display = "none";
+}
+
+  // 初期テーマ
+  const DEFAULT_THEME = "cafe";
+applyTheme(DEFAULT_THEME);
+</script>
+</body>
+</html>
