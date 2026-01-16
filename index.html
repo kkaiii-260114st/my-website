@@ -5,104 +5,185 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Kaito Cafe｜公式サイト</title>
   <meta name="description" content="Kaito Cafeは、街の夜をちょっとだけ良くする飲食ブランドです。店舗情報、メニュー、採用、会社情報はこちら。" />
-  <meta name="theme-color" content="#0b0f1a" />
+  <meta name="theme-color" content="#f4f1ec" />
+
   <style>
     :root{
-      --bg:#0b0f1a;
-      --panel:#121a2b;
-      --text:#e9ecf5;
-      --muted:#a8b0c6;
-      --accent:#ec4899;
-      --accent2:#a855f7;
+      --bg:#f4f1ec;      /* 生成り・壁っぽい */
+      --panel:#faf8f5;   /* 少しだけ黄み */
+      --text:#3a3a3a;
+      --muted:#7a7a7a;
+
+      --accent:#8b6b4f;   /* 薄めコーヒー */
+      --accent2:#e6d3b1;  /* ミルク多め */
+
       --good:#30d158;
-      --shadow: 0 24px 80px rgba(0,0,0,.35);
+      --line: rgba(58,58,58,.12);
+
+      --shadow: 0 8px 24px rgba(0,0,0,.08);
       --radius: 24px;
       --max: 1120px;
     }
+
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:radial-gradient(1200px 700px at 10% 0%, rgba(124,92,255,.25), transparent 55%),
-                                    radial-gradient(900px 600px at 80% 10%, rgba(0,229,255,.18), transparent 55%),
-                                    var(--bg); color:var(--text);
-              font-family: ui-sans-serif, system-ui, -apple-system, "Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic", sans-serif;}
-    a{color:inherit;text-decoration:none}
+
+    html, body{
+      margin:0;
+      padding:0;
+      background:
+        radial-gradient(1600px 900px at 18% 8%, rgba(240,230,218,.55), transparent 68%),
+        radial-gradient(1400px 900px at 86% 18%, rgba(233,220,200,.45), transparent 70%),
+        var(--bg);
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic", sans-serif;
+    }
+
+    /* リンクの青を封じる */
+    a{
+      color: var(--text);
+      text-decoration:none;
+    }
+    a:hover{ color: var(--accent); }
+    a:visited{ color: inherit; }
+    a.btn:visited{ color: var(--text); }
+
     .wrap{max-width:var(--max);margin:0 auto;padding:0 18px}
-    .btn{display:inline-flex;align-items:center;gap:.6em;padding:14px 22px;border-radius:14px;font-size:15px;
-         border:1px solid var(--line); background:rgba(255,255,255,.04); backdrop-filter: blur(10px);
-         transition:.2s ease; font-weight:700}
-    .btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22)}
-    .btn.primary{background:linear-gradient(135deg, rgba(124,92,255,.95), rgba(0,229,255,.55)); border-color:transparent}
-    .badge{display:inline-flex;align-items:center;gap:.5em;padding:7px 10px;border-radius:999px;
-           border:1px solid var(--line); background:rgba(255,255,255,.04); color:var(--muted); font-size:12px}
-    header{position:sticky;top:0;z-index:50;background:rgba(11,15,26,.7);backdrop-filter: blur(14px);
-           border-bottom:1px solid var(--line)}
+
+    .btn{
+      display:inline-flex;align-items:center;gap:.6em;padding:14px 22px;border-radius:14px;font-size:15px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      backdrop-filter: blur(10px);
+      transition:.2s ease; font-weight:700;
+      color: var(--text); /* ←青を防ぐ最重要 */
+    }
+    .btn:hover{
+      transform:translateY(-1px);
+      border-color: rgba(139,107,79,.35);
+      background: rgba(139,107,79,.06);
+    }
+    .btn.primary{
+      background: var(--accent);
+      color: #fff;
+      border: 1px solid rgba(0,0,0,.06);
+    }
+    .btn.primary:hover{
+      filter: brightness(0.97);
+      transform: translateY(-1px);
+    }
+
+    .badge{
+      display:inline-flex;align-items:center;gap:.5em;padding:7px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.35);
+      color:var(--muted);
+      font-size:12px
+    }
+
+    header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(58,58,58,.82);
+      backdrop-filter: blur(14px);
+      border-bottom:1px solid var(--line)
+    }
+
     .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:14px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.06em}
-    .logo{width:34px;height:34px;border-radius:12px;
-          background: conic-gradient(from 220deg, var(--accent), var(--accent2), var(--accent)); box-shadow: 0 10px 30px rgba(124,92,255,.25)}
+
+    .logo{
+      width:34px;height:34px;border-radius:12px;
+      background: conic-gradient(from 220deg,var(--accent),var(--accent2),var(--accent));
+      box-shadow: 0 10px 30px rgba(139,107,79,.25);
+      display:inline-block;
+    }
+
     .menu{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-    .menu a{color:var(--muted);font-weight:700;font-size:14px;padding:8px 10px;border-radius:999px}
-    .menu a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+    .menu a{color:rgba(250,248,245,.85);font-weight:700;font-size:14px;padding:8px 10px;border-radius:999px}
+    .menu a:hover{color:#fff;background:rgba(255,255,255,.10)}
     .nav-cta{display:flex;gap:10px;align-items:center}
     .hamb{display:none}
+
     .hero{padding:64px 0 28px}
     .hero-grid{display:grid;grid-template-columns: 1.12fr .88fr;gap:18px;align-items:stretch}
     .h1{font-size:40px;line-height:1.1;margin:10px 0 12px;letter-spacing:-.02em}
     .lead{color:var(--muted);font-size:16px;line-height:1.8;margin:0 0 18px}
+
     .card{
-      border:1px solid var(--line); background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border-radius: var(--radius); box-shadow: var(--shadow);
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.60), rgba(255,255,255,.30));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
+
     .hero-left{padding:22px}
     .hero-right{overflow:hidden;position:relative}
+
     .hero-visual{
-  height:100%;
-  min-height:260px;
-  background-image:
-    linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.65)),
-    url("images/hero.jpg");
-  background-size: cover;
-  background-position: center;
-  border-radius: var(--radius);
-  border:1px solid rgba(255,255,255,.14);
-}
-    .hero-visual::after{
-      content:""; position:absolute; inset:-30px;
-      background-image: linear-gradient( to bottom, rgba(0,0,0,.15), rgba(0,0,0,.65));
-      pointer-events:none;
+      height:100%;
+      min-height:260px;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.65)),
+        url("images/hero.jpg");
+      background-size: cover;
+      background-position: center;
+      border-radius: var(--radius);
+      border:1px solid rgba(0,0,0,.06);
     }
+
     .statbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-    .stat{padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(0,0,0,.18);min-width:160px}
+    .stat{
+      padding:12px 14px;border-radius:14px;border:1px solid var(--line);
+      background: rgba(255,255,255,.35);
+      min-width:160px
+    }
     .stat b{display:block;font-size:18px}
     .stat span{color:var(--muted);font-size:12px}
+
     section{padding:42px 0}
     .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:14px}
     .sec-head h2{margin:0;font-size:22px}
     .sec-head p{margin:0;color:var(--muted);line-height:1.6}
+
     .grid3{display:grid;grid-template-columns: repeat(3, 1fr); gap:14px}
     .grid2{display:grid;grid-template-columns: repeat(2, 1fr); gap:14px}
     .p16{padding:16px}
+
     .kicker{color:var(--muted);font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
     .h3{margin:8px 0 6px;font-size:16px}
     .txt{margin:0;color:var(--muted);line-height:1.8;font-size:14px}
+
     .pill{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;margin-top:10px}
     .dot{width:10px;height:10px;border-radius:50%;background:var(--good);box-shadow: 0 0 0 6px rgba(48,209,88,.15)}
+
     .table{width:100%;border-collapse:collapse}
     .table td,.table th{border-top:1px solid var(--line);padding:12px 10px;text-align:left;font-size:14px}
     .table th{color:var(--muted);font-weight:800}
+
     .footer{padding:24px 0 36px;border-top:1px solid var(--line);color:var(--muted)}
     .footer-grid{display:grid;grid-template-columns: 1.2fr .8fr; gap:14px; align-items:start}
     .small{font-size:12px;line-height:1.7;color:var(--muted)}
     .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    .chip{padding:8px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:12px}
-    .notice{border-left:3px solid rgba(0,229,255,.55);padding:12px 12px 12px 14px;background:rgba(0,229,255,.05);border-radius:12px;color:var(--muted)}
+    .chip{padding:8px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.25);font-size:12px}
+
+    /* noticeの青を撤去してカフェ色へ */
+    .notice{
+      border-left:3px solid rgba(139,107,79,.45);
+      padding:12px 12px 12px 14px;
+      background: rgba(139,107,79,.08);
+      border-radius:12px;
+      color: var(--muted);
+    }
+
     .form{display:grid;gap:10px}
     input,textarea{
       width:100%; padding:12px 12px; border-radius:12px;
-      border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--text);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.30);
+      color:var(--text);
       outline:none;
     }
     textarea{min-height:120px;resize:vertical}
-    input:focus,textarea:focus{border-color: rgba(124,92,255,.7)}
+    input:focus,textarea:focus{border-color: rgba(139,107,79,.55)}
     .right{display:flex;justify-content:flex-end;gap:10px}
     .hide{display:none}
 
@@ -494,14 +575,15 @@
     return false;
   }
 </script>
+
 <script>
   const THEMES = {
     cafe: {
       name: "Kaito Cafe",
       title: "コーヒー一杯で。<br>今日をリセット。",
       lead: "Kaito Cafeは、20〜30代が「また来たい」と思える空間を目指しています。",
-      accent: "#6f4e37",
-      accent2: "#d4a373"
+      accent: "#8b6b4f",
+      accent2: "#e6d3b1"
     },
     bar: {
       name: "Kaito Bar",
@@ -521,16 +603,15 @@
 
   function applyTheme(key){
     const t = THEMES[key];
-    document.getElementById("siteName").innerHTML = t.name;
+    document.getElementById("siteName").textContent = t.name;
     document.getElementById("heroTitle").innerHTML = t.title;
-    document.getElementById("heroLead").innerHTML = t.lead;
+    document.getElementById("heroLead").textContent = t.lead;
 
     const root = document.documentElement;
     root.style.setProperty("--accent", t.accent);
     root.style.setProperty("--accent2", t.accent2);
   }
 
-  // 画面右下に切り替えUIを出す（学習用）
   const panel = document.createElement("div");
   panel.style.cssText = `
     position: fixed; right: 14px; bottom: 14px; z-index: 9999;
@@ -541,21 +622,20 @@
   `;
   ["cafe","bar","salon"].forEach(k=>{
     const b = document.createElement("button");
+    b.type = "button";
     b.textContent = k.toUpperCase();
     b.className = "btn";
-    b.onclick = ()=>applyTheme(k);
+    b.addEventListener("click", ()=>applyTheme(k));
     panel.appendChild(b);
   });
   document.body.appendChild(panel);
-  const SHOW_SWITCHER = false; // trueにしたら表示
 
-if (!SHOW_SWITCHER) {
-  panel.style.display = "none";
-}
+  const SHOW_SWITCHER = false;
+  if (!SHOW_SWITCHER) panel.style.display = "none";
 
-  // 初期テーマ
   const DEFAULT_THEME = "cafe";
-applyTheme(DEFAULT_THEME);
+  applyTheme(DEFAULT_THEME);
 </script>
+
 </body>
 </html>
