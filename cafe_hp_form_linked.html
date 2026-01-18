@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="telephone=no" name="format-detection"/>
+<title>静けさで選べるカフェ｜公式サイト</title>
+<meta content="営業時間・混み具合・雰囲気・メニュー価格帯を、最短で確認できるカフェの公式サイト。" name="description"/>
+<meta content="#fbfaf7" name="theme-color"/>
+<style>
+    :root{
+      --bg:#fbfaf7;
+      --panel:#ffffff;
+      --panel2:#f6f3ea;
+      --text:#191a1d;
+      --muted:#5a5d66;
+      --line:rgba(25,26,29,.12);
+      --shadow: 0 16px 40px rgba(0,0,0,.08);
+
+      --accent:#b58a2a;    /* latte */
+      --accent2:#d6b36a;   /* honey */
+      --radius:22px;
+      --radius2:16px;
+
+      --max:1080px;
+      --pad:20px;
+
+      --focus: 0 0 0 3px rgba(181,138,42,.25);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", "Yu Gothic", "Meiryo", sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 700px at 10% 0%, rgba(181,138,42,.06), transparent 55%),
+                  radial-gradient(900px 600px at 90% 20%, rgba(214,179,106,.08), transparent 55%),
+                  var(--bg);
+      line-height:1.65;
+      letter-spacing:.02em;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    img{ max-width:100%; display:block; }
+
+    .wrap{
+      width:min(var(--max), calc(100% - 2*var(--pad)));
+      margin:0 auto;
+    }
+
+    /* Top ribbon (one-layer important info) */
+    .ribbon{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(251,250,247,.82);
+      border-bottom: 1px solid var(--line);
+    }
+    .ribbon .bar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:10px 0;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 0;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 8px 22px rgba(181,138,42,.25);
+      flex:0 0 auto;
+    }
+    .brand strong{
+      font-weight:650;
+      letter-spacing:.04em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .mini{
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 52ch;
+    }
+    .r-actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex:0 0 auto;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      border:1px solid var(--line);
+      background: var(--panel);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:999px;
+      font-weight:600;
+      font-size:14px;
+      line-height:1;
+      box-shadow: 0 10px 22px rgba(0,0,0,.04);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 16px 28px rgba(0,0,0,.06); }
+    .btn:active{ transform: translateY(0); box-shadow: 0 10px 22px rgba(0,0,0,.04); }
+    .btn:focus-visible{ outline:none; box-shadow: var(--focus), 0 16px 28px rgba(0,0,0,.06); border-color: rgba(181,138,42,.35); }
+    .btn.primary{
+      border-color: rgba(181,138,42,.35);
+      background: linear-gradient(135deg, rgba(181,138,42,.16), rgba(214,179,106,.14));
+    }
+    .btn.ghost{
+      background: transparent;
+      box-shadow:none;
+    }
+
+    /* Hero */
+    header.hero{
+      padding: 34px 0 22px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
+      align-items:stretch;
+    }
+    .hero-card{
+      position:relative;
+      border:1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      min-height: 360px;
+    }
+    .hero-media{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(600px 300px at 30% 20%, rgba(255,255,255,.28), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.22)),
+        url("https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1800&q=70") center/cover no-repeat;
+      filter: saturate(0.95) contrast(1.02);
+    }
+    .hero-overlay{
+      position:absolute; inset:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      padding: 26px;
+      color: #fff;
+    }
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      opacity:.9;
+    }
+    .kicker .line{
+      width:28px; height:1px; background: rgba(255,255,255,.65);
+    }
+    h1{
+      margin: 10px 0 10px;
+      font-size: clamp(26px, 3.2vw, 42px);
+      line-height:1.15;
+      letter-spacing:.02em;
+      font-weight:750;
+      text-shadow: 0 12px 30px rgba(0,0,0,.25);
+    }
+    .lead{
+      margin:0;
+      max-width: 52ch;
+      color: rgba(255,255,255,.92);
+      font-size: 15px;
+    }
+    .hero-ctas{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 18px;
+    }
+    .btn.on-dark{
+      background: rgba(255,255,255,.92);
+      border-color: rgba(255,255,255,.40);
+      box-shadow: 0 16px 40px rgba(0,0,0,.18);
+    }
+    .btn.on-dark.primary{
+      background: linear-gradient(135deg, rgba(255,255,255,.95), rgba(255,255,255,.78));
+      border-color: rgba(255,255,255,.55);
+    }
+
+    .hero-side{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(246,243,234,.9));
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 12px 34px rgba(0,0,0,.06);
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      min-height: 360px;
+    }
+    .side-title{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .side-title h2{
+      margin:0;
+      font-size:16px;
+      font-weight:750;
+      letter-spacing:.02em;
+    }
+    .pill{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.6);
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .kv{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    .kv .row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      padding: 10px 12px;
+      border-radius: var(--radius2);
+      border:1px solid rgba(25,26,29,.08);
+      background: rgba(255,255,255,.65);
+    }
+    .kv .label{
+      color: var(--muted);
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+    .kv .value{
+      font-weight:700;
+      text-align:right;
+      max-width: 60%;
+    }
+    .subnote{
+      color: var(--muted);
+      font-size:12px;
+      margin:0;
+    }
+
+    /* Sections */
+    main{ padding: 18px 0 80px; }
+    section{
+      margin: 18px 0;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.84);
+      border-radius: var(--radius);
+      box-shadow: 0 14px 40px rgba(0,0,0,.05);
+      overflow:hidden;
+    }
+    .sec{
+      padding: 20px;
+    }
+    .sec h3{
+      margin:0 0 10px;
+      font-size:18px;
+      font-weight:780;
+      letter-spacing:.02em;
+    }
+    .sec p{
+      margin:0 0 12px;
+      color: var(--muted);
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    .card{
+      border:1px solid rgba(25,26,29,.10);
+      background: rgba(255,255,255,.68);
+      border-radius: var(--radius2);
+      padding: 14px;
+    }
+    .card h4{
+      margin:0 0 6px;
+      font-size:14px;
+      font-weight:800;
+      letter-spacing:.02em;
+    }
+    .meta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top: 8px;
+    }
+    .tag{
+      font-size:12px;
+      color: var(--muted);
+      border:1px solid rgba(25,26,29,.10);
+      background: rgba(255,255,255,.72);
+      padding:6px 10px;
+      border-radius:999px;
+    }
+
+    /* crowd table */
+    table{
+      width:100%;
+      border-collapse:collapse;
+      overflow:hidden;
+      border-radius: 14px;
+      border:1px solid rgba(25,26,29,.10);
+      background: rgba(255,255,255,.75);
+    }
+    th,td{
+      padding:10px 10px;
+      border-bottom:1px solid rgba(25,26,29,.08);
+      font-size:13px;
+      text-align:left;
+      vertical-align:top;
+    }
+    th{
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: var(--muted);
+      background: rgba(246,243,234,.8);
+    }
+    tr:last-child td{ border-bottom:none; }
+    .lvl{
+      display:inline-flex; align-items:center; gap:6px;
+      font-weight:800;
+    }
+    .dot2{
+      width:8px;height:8px;border-radius:999px;
+      background: rgba(90,93,102,.35);
+    }
+    .lvl.busy .dot2{ background: rgba(181,50,42,.45); }
+    .lvl.mid  .dot2{ background: rgba(181,138,42,.42); }
+    .lvl.low  .dot2{ background: rgba(42,125,90,.42); }
+
+    /* footer CTA repeat */
+    .cta-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    /* mobile sticky CTA */
+    .mobile-cta{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      z-index:60;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(251,250,247,.86);
+      border-top:1px solid var(--line);
+      backdrop-filter: blur(12px);
+      display:none;
+    }
+    .mobile-cta .inner{
+      width:min(var(--max), calc(100% - 2*var(--pad)));
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:10px;
+    }
+    .mobile-cta .btn{
+      width:100%;
+      justify-content:center;
+      padding:12px 10px;
+      border-radius: 14px;
+      font-size:13px;
+      box-shadow: 0 12px 26px rgba(0,0,0,.06);
+    }
+    .mobile-cta .btn.primary{
+      background: linear-gradient(135deg, rgba(181,138,42,.18), rgba(214,179,106,.16));
+    }
+
+    /* dialogs */
+    dialog{
+      width:min(720px, calc(100% - 24px));
+      border:none;
+      border-radius: 18px;
+      padding:0;
+      box-shadow: 0 24px 70px rgba(0,0,0,.25);
+      background: var(--panel);
+    }
+    dialog::backdrop{
+      background: rgba(0,0,0,.42);
+    }
+    .dlg-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      padding: 16px 16px 10px;
+      border-bottom:1px solid rgba(25,26,29,.10);
+      background: rgba(246,243,234,.75);
+    }
+    .dlg-head strong{
+      font-size:14px;
+      letter-spacing:.02em;
+    }
+    .dlg-body{
+      padding: 16px;
+    }
+    .x{
+      border:1px solid rgba(25,26,29,.12);
+      background: rgba(255,255,255,.75);
+      border-radius:999px;
+      padding:8px 10px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .x:focus-visible{ outline:none; box-shadow: var(--focus); }
+
+    /* responsive */
+    @media (max-width: 920px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .hero-card, .hero-side{ min-height: 320px; }
+      .mini{ display:none; }
+    }
+    @media (max-width: 720px){
+      :root{ --pad:16px; }
+      .grid2{ grid-template-columns: 1fr; }
+      .r-actions .btn{ padding:10px 10px; }
+      .r-actions .hide-sm{ display:none; }
+      .mobile-cta{ display:block; }
+      main{ padding-bottom: 120px; }
+    }
+
+    /* reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ scroll-behavior:auto !important; transition:none !important; }
+    }
+
+    /* utility */
+    .muted{ color: var(--muted); }
+    .sep{ height:1px; background: rgba(25,26,29,.10); margin: 12px 0; }
+    .note{
+      font-size:12px;
+      color: var(--muted);
+      margin:10px 0 0;
+    }
+  </style>
+</head>
+<body>
+<!-- Ribbon: one-layer important -->
+<div class="ribbon" role="banner">
+<div class="wrap">
+<div class="bar">
+<div aria-label="サイト名" class="brand">
+<span aria-hidden="true" class="dot"></span>
+<div style="min-width:0">
+<strong id="shopName">Kaito Cafe</strong>
+<div class="mini">営業時間 / 混み具合 / 雰囲気 / 価格帯 を最短で確認</div>
+</div>
+</div>
+<div aria-label="主要アクション" class="r-actions">
+<a aria-label="予約フォームを開く" class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSffekitJCni-NjcKnd-4hSLPTGh4btV6gMSoaGtadtuOybvXA/viewform?usp=dialog" id="btnReserveTop" rel="noopener" target="_blank">
+            予約
+          </a>
+<a aria-label="営業時間へ" class="btn hide-sm" href="#today">
+            営業時間
+          </a>
+<button aria-label="地図とアクセスを開く" class="btn ghost" data-open="dlgAccess" type="button">
+            地図
+          </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Hero -->
+<header class="hero">
+<div class="wrap">
+<div class="hero-grid">
+<div aria-label="ファーストビュー" class="hero-card">
+<div aria-label="店内の雰囲気写真（差し替え推奨）" class="hero-media" role="img"></div>
+<div class="hero-overlay">
+<div class="kicker"><span aria-hidden="true" class="line"></span><span>Calm &amp; Clear</span></div>
+<h1>静けさで、<br/>失敗しないカフェ選び。</h1>
+<p class="lead">
+              営業時間・混み具合・雰囲気・価格帯。<br/>
+              行く前に必要な情報だけ、静かに揃えました。
+            </p>
+<div aria-label="ファーストビューのCTA" class="hero-ctas">
+<a class="btn on-dark primary" href="https://docs.google.com/forms/d/e/1FAIpQLSffekitJCni-NjcKnd-4hSLPTGh4btV6gMSoaGtadtuOybvXA/viewform?usp=dialog" rel="noopener" target="_blank">予約フォーム（約30秒）</a>
+<a class="btn on-dark" href="#today">今日行ける？</a>
+<button class="btn on-dark" data-open="dlgAccess" type="button">地図を開く</button>
+</div>
+<p class="note">※ 写真はサンプルです。自店写真に差し替えると一気に“本物”になります。</p>
+</div>
+</div>
+<aside aria-label="即判断カード" class="hero-side">
+<div class="side-title">
+<h2>今日行ける？</h2>
+<span class="pill" id="todayLabel">—</span>
+</div>
+<div class="kv" id="today">
+<div class="row">
+<div class="label">営業時間</div>
+<div class="value" id="openHours">11:00 – 19:00</div>
+</div>
+<div class="row">
+<div class="label">定休日</div>
+<div class="value" id="holiday">水曜日</div>
+</div>
+<div class="row">
+<div class="label">L.O.</div>
+<div class="value" id="lastOrder">18:30</div>
+</div>
+</div>
+<p class="subnote" id="todayHint">
+            混みやすい時間帯は「混み具合」で先に見せます。後出ししません。
+          </p>
+<div class="cta-row">
+<a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSffekitJCni-NjcKnd-4hSLPTGh4btV6gMSoaGtadtuOybvXA/viewform?usp=dialog" rel="noopener" target="_blank">予約フォーム（約30秒）</a>
+<button class="btn" data-open="dlgCrowd" type="button">混み具合</button>
+<button class="btn" data-open="dlgMenu" type="button">価格帯</button>
+</div>
+</aside>
+</div>
+</div>
+</header>
+<main>
+<div class="wrap">
+<!-- Crowd (summary + link to dialog) -->
+<section aria-label="混み具合と予約の入口" id="crowd">
+<div class="sec">
+<h3>混み具合（目安）</h3>
+<p>リアルタイム風の嘘はやらへん。運用が続く“現実的な目安”だけ置きます。</p>
+<div class="grid2">
+<div class="card">
+<h4>混みやすい</h4>
+<div class="muted">土日 13:00–16:00 ／ 平日 12:00–13:30</div>
+<div class="meta">
+<span class="tag">待ちやすい</span>
+<span class="tag">席埋まりやすい</span>
+</div>
+</div>
+<div class="card">
+<h4>空きやすい</h4>
+<div class="muted">平日 14:00–17:00 ／ 開店直後</div>
+<div class="meta">
+<span class="tag">静かめ</span>
+<span class="tag">作業向き</span>
+</div>
+</div>
+</div>
+<div class="cta-row">
+<button class="btn" data-open="dlgCrowd" type="button">曜日×時間帯を開く</button>
+<a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSffekitJCni-NjcKnd-4hSLPTGh4btV6gMSoaGtadtuOybvXA/viewform?usp=dialog" rel="noopener" target="_blank">予約フォーム（約30秒）</a>
+</div>
+<p class="note">※ 目安は運用で調整できます（季節・イベントで変動）。更新しやすい設計にしてあります。</p>
+</div>
+</section>
+<!-- Atmosphere -->
+<section aria-label="雰囲気（誤解防止）" id="mood">
+<div class="sec">
+<h3>雰囲気（誤解防止）</h3>
+<p>「思ってたのと違う」を一番減らす情報。盛らず、事実で書きます。</p>
+<div class="grid2">
+<div class="card">
+<h4>静けさ</h4>
+<div class="muted">★★☆（落ち着き重視）</div>
+<div aria-hidden="true" class="sep"></div>
+<div class="muted">大声は避けたいタイプの空間です。</div>
+</div>
+<div class="card">
+<h4>会話 / 作業</h4>
+<div class="muted">会話：小声推奨 ／ 作業：OK（長時間はご配慮）</div>
+<div aria-hidden="true" class="sep"></div>
+<div class="muted">Wi-Fi：あり ／ 電源：一部席</div>
+</div>
+</div>
+<p class="note">※ ここは店舗ルールに合わせて断定形で揃えるのが信頼につながります。</p>
+</div>
+</section>
+<!-- Menu summary -->
+<section aria-label="メニュー（価格帯の安心）" id="menu">
+<div class="sec">
+<h3>メニュー（価格帯の安心）</h3>
+<p>まずは価格帯。次に人気。詳細は別レイヤーに逃がします。</p>
+<div class="grid2">
+<div class="card">
+<h4>価格帯</h4>
+<div class="muted">ドリンク：¥480〜 ／ フード：¥620〜 ／ デザート：¥520〜</div>
+<div class="meta">
+<span class="tag">現金</span>
+<span class="tag">カード</span>
+<span class="tag">QR決済</span>
+</div>
+</div>
+<div class="card">
+<h4>人気（3つだけ）</h4>
+<div class="muted">・ラテ（深煎り）<br/>・季節のタルト<br/>・バタートースト</div>
+<div class="meta">
+<span class="tag">迷い防止</span>
+<span class="tag">最初の一杯</span>
+</div>
+</div>
+</div>
+<div class="cta-row">
+<button class="btn" data-open="dlgMenu" type="button">メニュー詳細を開く</button>
+<a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSffekitJCni-NjcKnd-4hSLPTGh4btV6gMSoaGtadtuOybvXA/viewform?usp=dialog" rel="noopener" target="_blank">予約フォーム（約30秒）</a>
+</div>
+</div>
+</section>
+<!-- Reserve -->
+<section aria-label="予約" id="reserve">
+<div class="sec">
+<h3>予約</h3>
+<p>急かさへん。でも迷わせへん。行動の入口はここで完結。</p>
+<div class="grid2">
+<div class="card">
+<h4>予約の目安</h4>
+<div class="muted">
+                ・土日 13:00–16:00 は予約推奨<br/>
+                ・当日でも空きがあれば案内できます<br/>
+                ・人数は最大 4 名まで（例）
+              </div>
+<p class="note">※ 予約条件は店舗仕様に合わせて調整してください。</p>
+</div>
+<div class="card">
+<h4>予約方法</h4>
+<div class="muted">
+                下のどれかでOK。<br/>
+                （ここは実リンクに差し替え推奨）
+              </div>
+<div class="cta-row" style="margin-top:10px">
+<a aria-label="電話で予約する" class="btn primary" href="tel:000-0000-0000">電話する</a>
+<a aria-label="予約フォームを開く" class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSffekitJCni-NjcKnd-4hSLPTGh4btV6gMSoaGtadtuOybvXA/viewform?usp=dialog" rel="noopener noreferrer" target="_blank">予約フォーム</a>
+<a aria-label="メールで問い合わせる" class="btn" href="mailto:hello@example.com">メール</a>
+</div>
+</div>
+</div>
+<div class="cta-row">
+<button class="btn" data-open="dlgAccess" type="button">地図を見る</button>
+<button class="btn" data-open="dlgCrowd" type="button">混み具合を見る</button>
+<button class="btn" data-open="dlgMenu" type="button">価格帯を見る</button>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<section aria-label="最後の案内">
+<div class="sec">
+<h3>最後に、迷子をゼロにする</h3>
+<p>どこまで読んでも、次の行動は見失わへんようにしてます。</p>
+<div class="cta-row">
+<a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSffekitJCni-NjcKnd-4hSLPTGh4btV6gMSoaGtadtuOybvXA/viewform?usp=dialog" rel="noopener" target="_blank">予約フォーム（約30秒）</a>
+<button class="btn" data-open="dlgAccess" type="button">地図を開く</button>
+<a class="btn" href="#today">営業時間を見る</a>
+</div>
+<p class="note">© <span id="year"></span> <span id="shopName2">Kaito Cafe</span></p>
+</div>
+</section>
+</div>
+</main>
+<!-- Mobile sticky CTA -->
+<div aria-label="モバイル固定CTA" class="mobile-cta" role="navigation">
+<div class="inner">
+<a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSffekitJCni-NjcKnd-4hSLPTGh4btV6gMSoaGtadtuOybvXA/viewform?usp=dialog" rel="noopener" target="_blank">予約</a>
+<a class="btn" href="#today">営業時間</a>
+<button class="btn" data-open="dlgAccess" type="button">地図</button>
+</div>
+</div>
+<!-- Dialog: Access -->
+<dialog aria-label="アクセス情報" id="dlgAccess">
+<div class="dlg-head">
+<div>
+<strong>アクセス</strong>
+<div class="muted" style="font-size:12px;margin-top:2px">最寄り・駐車場・迷いポイントをまとめて確認</div>
+</div>
+<button class="x" data-close="" type="button">閉じる</button>
+</div>
+<div class="dlg-body">
+<div class="grid2">
+<div class="card">
+<h4>住所</h4>
+<div class="muted">滋賀県◯◯市◯◯（例）</div>
+<div aria-hidden="true" class="sep"></div>
+<div class="muted">最寄り：◯◯駅 徒歩7分（例）</div>
+</div>
+<div class="card">
+<h4>駐車場 / 駐輪</h4>
+<div class="muted">駐車場：2台（例）／ 満車時：近隣Pをご利用ください</div>
+<div aria-hidden="true" class="sep"></div>
+<div class="muted">駐輪：店前に数台可（例）</div>
+</div>
+</div>
+<div class="card" style="margin-top:14px">
+<h4>地図</h4>
+<div class="muted">GoogleマップのURLに差し替えてください。</div>
+<div class="cta-row" style="margin-top:10px">
+<a class="btn primary" href="https://maps.google.com/?q=Shiga" rel="noopener noreferrer" target="_blank">Googleマップを開く</a>
+<button class="btn" data-close="" type="button">このまま戻る</button>
+</div>
+</div>
+<p class="note">※ アクセスは“迷いポイント”を1つだけ書くと、来店のストレスが減ります。</p>
+</div>
+</dialog>
+<!-- Dialog: Crowd -->
+<dialog aria-label="混み具合（曜日×時間帯）" id="dlgCrowd">
+<div class="dlg-head">
+<div>
+<strong>混み具合（曜日×時間帯）</strong>
+<div class="muted" style="font-size:12px;margin-top:2px">運用が続く“目安”方式。誤解が少ない。</div>
+</div>
+<button class="x" data-close="" type="button">閉じる</button>
+</div>
+<div class="dlg-body">
+<table aria-label="混雑目安テーブル">
+<thead>
+<tr>
+<th>曜日</th>
+<th>空きやすい</th>
+<th>ふつう</th>
+<th>混みやすい</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>平日</strong></td>
+<td><span class="lvl low"><span class="dot2"></span>14:00–17:00</span></td>
+<td><span class="lvl mid"><span class="dot2"></span>11:00–12:00</span></td>
+<td><span class="lvl busy"><span class="dot2"></span>12:00–13:30</span></td>
+</tr>
+<tr>
+<td><strong>土日</strong></td>
+<td><span class="lvl low"><span class="dot2"></span>開店直後</span></td>
+<td><span class="lvl mid"><span class="dot2"></span>16:00–18:00</span></td>
+<td><span class="lvl busy"><span class="dot2"></span>13:00–16:00</span></td>
+</tr>
+</tbody>
+</table>
+<div class="card" style="margin-top:14px">
+<h4>予約の考え方</h4>
+<div class="muted">
+          ・混みやすい時間だけ予約推奨<br/>
+          ・空きやすい時間は“ふらっと”歓迎<br/>
+          ・急に混む日（雨・イベント）は「SNSで一言」だけ出すと親切
+        </div>
+</div>
+<div class="cta-row" style="margin-top:14px">
+<a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSffekitJCni-NjcKnd-4hSLPTGh4btV6gMSoaGtadtuOybvXA/viewform?usp=dialog" onclick="closeAnyDialog()" rel="noopener" target="_blank">予約フォーム（約30秒）</a>
+<button class="btn" data-close="" type="button">戻る</button>
+</div>
+</div>
+</dialog>
+<!-- Dialog: Menu -->
+<dialog aria-label="メニュー詳細" id="dlgMenu">
+<div class="dlg-head">
+<div>
+<strong>メニュー（詳細）</strong>
+<div class="muted" style="font-size:12px;margin-top:2px">判断材料としての写真と価格。盛らない。</div>
+</div>
+<button class="x" data-close="" type="button">閉じる</button>
+</div>
+<div class="dlg-body">
+<div class="grid2">
+<div class="card">
+<h4>ドリンク</h4>
+<div class="muted">
+            ・ラテ（深煎り） ¥580<br/>
+            ・ハンドドリップ ¥520<br/>
+            ・ほうじ茶ラテ ¥620
+          </div>
+</div>
+<div class="card">
+<h4>フード / デザート</h4>
+<div class="muted">
+            ・バタートースト ¥620<br/>
+            ・季節のタルト ¥680<br/>
+            ・スコーン ¥520
+          </div>
+</div>
+</div>
+<div class="card" style="margin-top:14px">
+<h4>アレルギー等</h4>
+<div class="muted">
+          可能な範囲で対応します。来店前にご相談ください。<br/>
+          （例：ナッツ使用メニューあり）
+        </div>
+</div>
+<div class="cta-row" style="margin-top:14px">
+<a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSffekitJCni-NjcKnd-4hSLPTGh4btV6gMSoaGtadtuOybvXA/viewform?usp=dialog" onclick="closeAnyDialog()" rel="noopener" target="_blank">予約フォーム（約30秒）</a>
+<button class="btn" data-close="" type="button">戻る</button>
+</div>
+<p class="note">※ 実メニューに差し替えるだけで完成度が一気に上がります。</p>
+</div>
+</dialog>
+<script>
+    (function(){
+      "use strict";
+
+      // Simple helpers
+      function $(sel, root){ return (root || document).querySelector(sel); }
+      function $all(sel, root){ return Array.from((root || document).querySelectorAll(sel)); }
+
+      // Date label
+      var now = new Date();
+      var y = now.getFullYear();
+      $("#year").textContent = String(y);
+
+      var weekdays = ["日","月","火","水","木","金","土"];
+      var label = (now.getMonth()+1) + "/" + now.getDate() + "（" + weekdays[now.getDay()] + "）";
+      $("#todayLabel").textContent = label;
+
+      // Dialog open/close
+      function openDialogById(id){
+        var dlg = document.getElementById(id);
+        if (!dlg) return;
+        if (typeof dlg.showModal === "function"){
+          dlg.showModal();
+        } else {
+          // Fallback: if dialog not supported, jump to section
+          location.hash = "#reserve";
+        }
+      }
+
+      function closeDialogs(){
+        $all("dialog[open]").forEach(function(d){ d.close(); });
+      }
+
+      // Expose for inline onclick
+      window.closeAnyDialog = closeDialogs;
+
+      // Wire buttons
+      $all("[data-open]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var id = btn.getAttribute("data-open");
+          openDialogById(id);
+        });
+      });
+
+      $all("dialog [data-close]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var dlg = btn.closest("dialog");
+          if (dlg) dlg.close();
+        });
+      });
+
+      // ESC close already works. Click outside to close:
+      $all("dialog").forEach(function(dlg){
+        dlg.addEventListener("click", function(e){
+          var rect = dlg.getBoundingClientRect();
+          var inDialog = (
+            e.clientX >= rect.left && e.clientX <= rect.right &&
+            e.clientY >= rect.top  && e.clientY <= rect.bottom
+          );
+          if (!inDialog) dlg.close();
+        });
+      });
+
+      // Smooth scroll (respect reduced motion by CSS override)
+      $all('a[href^="#"]').forEach(function(a){
+        a.addEventListener("click", function(){
+          closeDialogs();
+        });
+      });
+
+      // Easy customization: shop name sync
+      var shopName = $("#shopName").textContent.trim();
+      $("#shopName2").textContent = shopName;
+
+    })();
+  </script>
+</body>
+</html>
